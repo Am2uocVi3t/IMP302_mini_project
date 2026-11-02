@@ -1,0 +1,66 @@
+% Generated from results/*.csv; measured values are not edited by hand.
+\begin{table}[ht]
+\centering\small
+\caption{Mean PSNR (dB) / SSIM on 20 held-out test images per noise level.}
+\label{tab:main}
+\begin{tabular}{lccc}
+\toprule
+Method & $\sigma=15$ & $\sigma=25$ & $\sigma=50$ \\
+\midrule
+Noisy input & 24.77 / 0.619 & 20.49 / 0.440 & 14.94 / 0.226 \\
+Gaussian & 26.58 / 0.762 & 25.66 / 0.702 & 23.00 / 0.548 \\
+Bilateral & 28.81 / 0.819 & 26.35 / 0.723 & 23.12 / 0.554 \\
+NLM & 28.63 / 0.812 & 26.19 / 0.722 & 23.00 / 0.567 \\
+Learned fusion & 29.18 / 0.829 & 26.72 / 0.746 & 23.61 / 0.595 \\
+Residual MLP & 28.24 / 0.797 & 26.08 / 0.690 & 23.21 / 0.513 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering\small
+\caption{Paired fusion gains; 95\% image bootstrap intervals. MSE reduction is the geometric-mean equivalent of mean $\Delta$PSNR.}
+\label{tab:paired}
+\begin{tabular}{c l c c c c}
+\toprule
+$\sigma$ & Baseline & $\Delta$ dB & 95\% CI & Wins & MSE reduction \\
+\midrule
+15 & NLM & +0.55 & [+0.44, +0.65] & 19/20 & 11.9\% \\
+25 & NLM & +0.54 & [+0.40, +0.68] & 18/20 & 11.6\% \\
+50 & NLM & +0.61 & [+0.42, +0.77] & 18/20 & 13.1\% \\
+15 & Bilateral & +0.37 & [+0.23, +0.52] & 16/20 & 8.2\% \\
+25 & Bilateral & +0.37 & [+0.23, +0.53] & 17/20 & 8.2\% \\
+50 & Bilateral & +0.49 & [+0.35, +0.67] & 20/20 & 10.7\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering\small
+\caption{Fusion weights fitted on training images; each row sums to one.}
+\label{tab:weights}
+\begin{tabular}{cccc}
+\toprule
+$\sigma$ & Gaussian & Bilateral & NLM \\
+\midrule
+15 & 0.10 & 0.40 & 0.50 \\
+25 & 0.25 & 0.25 & 0.50 \\
+50 & 0.45 & 0.05 & 0.50 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering\small
+\caption{MLP ablation and configuration selection on validation images.}
+\label{tab:ablation}
+\begin{tabular}{ccc}
+\toprule
+Hidden units & Texture features & Validation PSNR (dB) \\
+\midrule
+16 & No & 23.71 \\
+16 & Yes & 25.80 \\
+32 & Yes & 26.43 \\
+\bottomrule
+\end{tabular}
+\end{table}

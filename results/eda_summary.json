@@ -1,0 +1,49 @@
+{
+  "source": "https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/BSDS300-images.tgz",
+  "source_sha256": "7f855a00491a3f1ca2609b3c96651b88b265fe59b70a7b007cc7a2850a22b386",
+  "seed": 302,
+  "split_counts": {
+    "train": 60,
+    "val": 12,
+    "pilot": 20,
+    "test": 20
+  },
+  "image_count_audited": 112,
+  "exact_cross_split_duplicates": 0,
+  "dhash_candidates_cross_split_hamming_le_4": 0,
+  "train_width_min_max": [
+    171,
+    256
+  ],
+  "train_height_min_max": [
+    171,
+    256
+  ],
+  "train_brightness_min_max": [
+    45.577119883040936,
+    167.74817251461988
+  ],
+  "train_contrast_std_min_max": [
+    17.162478004902628,
+    75.95257476772592
+  ],
+  "noise_example_train_id": "100075",
+  "noise_checks": {
+    "15": {
+      "measured_difference_std": 14.946830749511719,
+      "clipped_fraction": 0.0006853070175438596
+    },
+    "25": {
+      "measured_difference_std": 24.84532928466797,
+      "clipped_fraction": 0.007492690058479532
+    },
+    "50": {
+      "measured_difference_std": 47.53064727783203,
+      "clipped_fraction": 0.06432748538011696
+    }
+  },
+  "software": {
+    "numpy": "2.4.6",
+    "opencv": "4.14.0"
+  }
+}

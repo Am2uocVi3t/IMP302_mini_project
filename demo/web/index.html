@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NOISE / LAB — IMP302</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23131719'/%3E%3Cpath fill='%231b6c80' d='M16 0h16v16H16z'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <aside class="sidebar" aria-label="Điều hướng">
+    <div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>NOISE<span class="slash">/</span>LAB<small>IMP302 · Image restoration</small></span></div>
+    <nav><a class="active" href="#workspace">Workbench</a><a href="#benchmark">Benchmark</a><a href="#method">Phương pháp</a></nav>
+    <div class="side-note"><span class="signal"></span> Local experiment<br><strong>BSDS300 · Grayscale</strong><p>Ảnh test giữ riêng khi chọn tham số và huấn luyện.</p></div>
+  </aside>
+  <div class="main-area">
+    <header class="topbar"><span>FPT University / IMP302 / Mini project</span><span class="top-right">Denoising study</span></header>
+    <main class="sheet" id="workspace">
+      <div class="page-head"><div><div class="eyebrow">IMAGE RESTORATION WORKBENCH</div><h1>Khử nhiễu, nhìn bằng số liệu.</h1><p>Thử một ảnh sạch với nhiễu Gaussian mô phỏng. So sánh đầu ra, PSNR và SSIM trên cùng một đầu vào.</p></div><span class="course-tag">Chapter 03 / 08</span></div>
+      <div class="workspace-grid">
+        <section class="controls" aria-label="Thiết lập thử nghiệm">
+          <div class="section-head"><h2>Thiết lập</h2></div>
+          <label for="example">Ảnh mẫu Berkeley</label><select id="example"></select>
+          <div class="or">hoặc</div>
+          <label class="upload" for="upload"><span>Tải ảnh sạch của bạn</span><small>PNG hoặc JPG · tối đa 4 MB</small></label><input id="upload" type="file" accept="image/png,image/jpeg">
+          <p id="upload-name" class="helper">Ảnh tải lên được xem là ảnh tham chiếu; ứng dụng sẽ thêm nhiễu để đo chất lượng.</p>
+          <div class="control-rule"></div>
+          <fieldset><legend>Độ lệch chuẩn nhiễu σ</legend><div class="sigma-options"><label><input type="radio" name="sigma" value="15"><span>15 <small>nhẹ</small></span></label><label><input type="radio" name="sigma" value="25" checked><span>25 <small>vừa</small></span></label><label><input type="radio" name="sigma" value="50"><span>50 <small>mạnh</small></span></label></div></fieldset>
+          <button id="run" class="run-button">Chạy so sánh <span aria-hidden="true">↗</span></button>
+          <div id="status" role="status" aria-live="polite">Sẵn sàng chạy trên CPU.</div>
+        </section>
+        <section class="viewer" aria-label="So sánh ảnh">
+          <div class="section-head"><h2>Quan sát</h2><span id="image-meta">Ảnh chưa được xử lý</span></div>
+          <div class="image-stage"><img id="base-image" alt="Ảnh tham chiếu"><div id="overlay-clip"><img id="overlay-image" alt="Ảnh được xử lý"></div><div id="split-line"></div><div class="empty-stage" id="empty-stage">Chọn ảnh mẫu rồi bấm “Chạy so sánh”</div></div>
+          <div class="compare-controls"><label for="method">Phương pháp hiển thị</label><select id="method"><option value="fusion">Learned fusion</option><option value="mlp">Residual MLP</option><option value="nlm">Non-Local Means</option><option value="bilateral">Bilateral</option><option value="gaussian">Gaussian blur</option><option value="noisy">Ảnh nhiễu</option></select></div>
+          <label class="split-label" for="split">Kéo để so sánh <span>Tham chiếu <b>←</b> Đầu ra</span></label><input id="split" type="range" min="0" max="100" value="50" aria-label="Vị trí đường so sánh">
+          <div class="image-caption">Cùng một ảnh và cùng nhiễu cho mọi phương pháp. Mép ảnh và chi tiết mịn có thể cho cảm nhận khác điểm số.</div>
+        </section>
+      </div>
+      <section class="metrics" aria-labelledby="metrics-title"><div class="section-head"><div><h2 id="metrics-title">Kết quả ảnh hiện tại</h2><p>PSNR cao hơn và SSIM gần 1 hơn thường cho thấy ảnh gần ảnh gốc hơn.</p></div><span id="sigma-meta">σ = 25</span></div><div class="metric-table-wrap"><table><thead><tr><th>Phương pháp</th><th>PSNR <small>dB</small></th><th>SSIM</th><th>Δ PSNR so với NLM <small>dB</small></th></tr></thead><tbody id="metric-rows"><tr><td colspan="4" class="table-empty">Chạy so sánh để xem số liệu trên ảnh đang chọn.</td></tr></tbody></table></div></section>
+      <section class="benchmark" id="benchmark" aria-labelledby="benchmark-title"><div class="section-head"><div><h2 id="benchmark-title">Kiểm định trên tập test</h2><p>Trung bình theo ảnh trên 20 ảnh giữ riêng; ba mức nhiễu Gaussian.</p></div><span>BSDS300 · test split</span></div><div id="benchmark-grid" class="benchmark-grid"></div><p class="benchmark-note" id="benchmark-note"></p></section>
+      <section class="method-note" id="method"><div><div class="eyebrow">METHOD NOTE</div><h2>Hợp nhất theo mức nhiễu</h2></div><p>Learned fusion học trọng số không âm, tổng bằng một cho Gaussian, bilateral và Non-Local Means ở từng mức nhiễu. MLP nhỏ học hiệu chỉnh phần dư NLM theo đặc trưng cục bộ để đối chiếu cách học phi tuyến. Tham số NLM và kiến trúc MLP chọn trên validation; 20 ảnh test cuối được giữ riêng sau giai đoạn thử nghiệm. Đây là biến thể thực nghiệm của bài làm, không phải tuyên bố phương pháp mới hay tốt nhất toàn lĩnh vực.</p></section>
+      <footer>NOISE / LAB <span>IMP302 mini project · Dữ liệu và mã chạy cục bộ</span></footer>
+    </main>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>
